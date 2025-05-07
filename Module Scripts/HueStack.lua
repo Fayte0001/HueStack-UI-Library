@@ -1017,6 +1017,7 @@ end
 function UICornerStrokeLib.CreateDropdown(parent, settings)
 	settings = settings or {}
 
+
 	local dropdownContainer = UICornerStrokeLib.CreateElement("Frame", {
 		Size = UDim2.new(1, 0, 0, 38),
 		BackgroundTransparency = 1,
@@ -1025,6 +1026,7 @@ function UICornerStrokeLib.CreateDropdown(parent, settings)
 		ClipsDescendants = true,
 		AutoLayout = false
 	})
+
 
 	local dropdownButton = UICornerStrokeLib.CreateElement("TextButton", {
 		Size = UDim2.new(1, 0, 0, 38),
@@ -1056,21 +1058,36 @@ function UICornerStrokeLib.CreateDropdown(parent, settings)
 		Position = UDim2.new(1, -24, 0.5, 0),
 		AnchorPoint = Vector2.new(0, 0.5),
 		BackgroundTransparency = 1,
-		Image = "rbxassetid://3926305904",
-		ImageRectOffset = Vector2.new(284, 4),
-		ImageRectSize = Vector2.new(24, 24),
+		Image = "rbxassetid://10709763034", 
 		ImageColor3 = theme.TextColor,
 		ZIndex = dropdownButton.ZIndex + 1,
 		AutoLayout = false
 	})
 	chevron.Parent = dropdownButton
 
+	-- Create a separate ScreenGui for the dropdown options
+	local optionsGui = Instance.new("ScreenGui")
+	optionsGui.Name = "DropdownOptionsGui"
+	optionsGui.ResetOnSpawn = false
+	optionsGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+	optionsGui.DisplayOrder = 1000 
+
+
+	local success, err = pcall(function()
+		optionsGui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+	end)
+
+	if not success then
+
+		optionsGui.Parent = parent:FindFirstAncestorOfClass("ScreenGui") or game:GetService("StarterGui")
+	end
+
+
 	local optionsFrame = UICornerStrokeLib.CreateElement("Frame", {
-		Size = UDim2.new(1, 0, 0, 0),
-		Position = UDim2.new(0, 0, 1, 0),
+		Size = UDim2.new(0, dropdownButton.AbsoluteSize.X, 0, 0),
 		BackgroundColor3 = theme.PrimaryColor,
 		Visible = false,
-		ZIndex = theme.ZIndex.Dropdown + 10, 
+		ZIndex = 1001,  
 		ClipsDescendants = true,
 		AutoLayout = false
 	})
@@ -1079,6 +1096,12 @@ function UICornerStrokeLib.CreateDropdown(parent, settings)
 		BackgroundTransparency = theme.Transparency.Dropdown,
 		StrokeColor = theme.SecondaryColor
 	})
+
+	local function updateOptionsPosition()
+		local buttonPos = dropdownButton.AbsolutePosition
+		local buttonSize = dropdownButton.AbsoluteSize
+		optionsFrame.Position = UDim2.new(0, buttonPos.X, 0, buttonPos.Y + buttonSize.Y)
+	end
 
 	local scrollFrame = UICornerStrokeLib.CreateElement("ScrollingFrame", {
 		Size = UDim2.new(1, 0, 1, 0),
@@ -1109,7 +1132,7 @@ function UICornerStrokeLib.CreateDropdown(parent, settings)
 	optionsPadding.Parent = scrollFrame
 
 	scrollFrame.Parent = optionsFrame
-	optionsFrame.Parent = dropdownContainer
+	optionsFrame.Parent = optionsGui
 	dropdownButton.Parent = dropdownContainer
 
 	local isOpen = false
@@ -1119,24 +1142,24 @@ function UICornerStrokeLib.CreateDropdown(parent, settings)
 
 	local function toggleDropdown()
 		isOpen = not isOpen
+		updateOptionsPosition()
 
 		if isOpen then
-			dropdownContainer.ZIndex = theme.ZIndex.Dropdown + 200
 			optionsFrame.Visible = true
 			UICornerStrokeLib.CreateTween(chevron, {Rotation = 180}, 0.15)
 			UICornerStrokeLib.CreateTween(optionsFrame, {
-				Size = UDim2.new(1, 0, 0, math.min(#options * 32 + 8, 200))
+				Size = UDim2.new(0, dropdownButton.AbsoluteSize.X, 0, math.min(#options * 32 + 8, 200))
 			}, 0.2)
 		else
 			UICornerStrokeLib.CreateTween(chevron, {Rotation = 0}, 0.15)
 			UICornerStrokeLib.CreateTween(optionsFrame, {
-				Size = UDim2.new(1, 0, 0, 0)
+				Size = UDim2.new(0, dropdownButton.AbsoluteSize.X, 0, 0)
 			}, 0.2).Completed:Connect(function()
 				optionsFrame.Visible = false
-				dropdownContainer.ZIndex = theme.ZIndex.Content
 			end)
 		end
 	end
+
 
 	local function selectOption(option)
 		selectedOption = option
@@ -1244,40 +1267,35 @@ function UICornerStrokeLib.CreateDropdown(parent, settings)
 		}, 0.15)
 	end)
 
-	local function handleClickOutside(input)
+	UserInputService.InputBegan:Connect(function(input)
 		if isOpen and input.UserInputType == Enum.UserInputType.MouseButton1 then
 			local mousePos = input.Position
-			local absolutePos = dropdownContainer.AbsolutePosition
-			local absoluteSize = dropdownContainer.AbsoluteSize
+			local buttonAbsPos = dropdownButton.AbsolutePosition
+			local buttonAbsSize = dropdownButton.AbsoluteSize
+			local optionsAbsPos = optionsFrame.AbsolutePosition
+			local optionsAbsSize = optionsFrame.AbsoluteSize
 
-			if not (mousePos.X >= absolutePos.X and mousePos.X <= absolutePos.X + absoluteSize.X and
-				mousePos.Y >= absolutePos.Y and mousePos.Y <= absolutePos.Y + absoluteSize.Y + (isOpen and optionsFrame.AbsoluteSize.Y or 0)) then
+			local isOverButton = mousePos.X >= buttonAbsPos.X and mousePos.X <= buttonAbsPos.X + buttonAbsSize.X and
+				mousePos.Y >= buttonAbsPos.Y and mousePos.Y <= buttonAbsPos.Y + buttonAbsSize.Y
+
+			local isOverOptions = mousePos.X >= optionsAbsPos.X and mousePos.X <= optionsAbsPos.X + optionsAbsSize.X and
+				mousePos.Y >= optionsAbsPos.Y and mousePos.Y <= optionsAbsPos.Y + optionsAbsSize.Y
+
+			if not isOverButton and not isOverOptions then
 				toggleDropdown()
-			end
-		end
-	end
-
-	UserInputService.InputBegan:Connect(handleClickOutside)
-
-	local listenerId = UICornerStrokeLib.RegisterThemeListener(function(newTheme)
-		dropdownButton.BackgroundColor3 = newTheme.PrimaryColor
-		dropdownButton.TextColor3 = newTheme.TextColor
-		optionsFrame.BackgroundColor3 = newTheme.PrimaryColor
-
-		for _, btn in pairs(optionButtons) do
-			if btn.Text == selectedOption then
-				btn.BackgroundColor3 = newTheme.AccentColor
-				btn.TextColor3 = Color3.new(1, 1, 1)
-			else
-				btn.BackgroundColor3 = newTheme.PrimaryColor
-				btn.TextColor3 = newTheme.TextColor
 			end
 		end
 	end)
 
 	dropdownContainer.AncestryChanged:Connect(function()
 		if not dropdownContainer:IsDescendantOf(game) then
-			UICornerStrokeLib.UnregisterThemeListener(listenerId)
+			optionsGui:Destroy()
+		end
+	end)
+
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if isOpen then
+			updateOptionsPosition()
 		end
 	end)
 
@@ -1321,9 +1339,44 @@ function UICornerStrokeLib.CreateDropdown(parent, settings)
 			if not isOpen then
 				toggleDropdown()
 			end
+		end,
+
+		RefreshOptions = function(self, newOptions, keepSelection)
+			local currentSelection = selectedOption
+
+			options = newOptions or {}
+
+			createOptions()
+
+			if keepSelection then
+				if currentSelection and table.find(options, currentSelection) then
+					selectedOption = currentSelection
+					dropdownButton.Text = currentSelection
+				else
+					selectedOption = #options > 0 and options[1] or "Select an option"
+					dropdownButton.Text = selectedOption
+				end
+			else
+				selectedOption = #options > 0 and options[1] or "Select an option"
+				dropdownButton.Text = selectedOption
+			end
+
+			for _, btn in pairs(optionButtons) do
+				if btn.Text == selectedOption then
+					btn.BackgroundColor3 = theme.AccentColor
+					btn.TextColor3 = Color3.new(1, 1, 1)
+				else
+					btn.BackgroundColor3 = theme.PrimaryColor
+					btn.TextColor3 = theme.TextColor
+				end
+			end
+			if settings.OnSelect and selectedOption ~= currentSelection then
+				settings.OnSelect(selectedOption)
+			end
 		end
 	}
 end
+
 
 function UICornerStrokeLib.CreateToggle(parent, settings)
 	settings = settings or {}
