@@ -3,7 +3,7 @@ local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local DraggableObject = loadstring(game:HttpGet(`https://raw.githubusercontent.com/Fayte0001/HueStack-UI-Library/refs/heads/main/Loadstring/draggableobject.txt))()
+local DraggableObject = loadstring(game:HttpGet(`https://raw.githubusercontent.com/Fayte0001/HueStack-UI-Library/refs/heads/main/Loadstring/draggableobject.txt`))()
 --[[
     ===========================================
     THEME CONFIGURATION
