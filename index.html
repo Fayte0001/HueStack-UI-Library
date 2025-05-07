@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HueStack UI Library Documentation</title>
+    <link rel="icon" type="image/png" href="https://cdn.discordapp.com/attachments/1333455159971545169/1369648116550078514/ChatGPT_Image_May_7_2025_03_12_28_PM.png?ex=681c9fb5&is=681b4e35&hm=df072314929cfd07240b50d42015f4483befe9f5c351c8ce00706c270442d9b3&" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>HueStack UI Library</h1>
+            <p>A modern, customizable UI framework for Roblox experiences</p>
+        </div>
+    </div>
+   
+
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>HueStack Docs</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#introduction"><i class="fas fa-home"></i> Introduction</a></li>
+                <li><a href="#getting-started"><i class="fas fa-rocket"></i> Getting Started</a></li>
+                <li><a href="#components"><i class="fas fa-cubes"></i> Components</a></li>
+                <li><a href="#theming"><i class="fas fa-palette"></i> Theming</a></li>
+                <li><a href="#api-reference"><i class="fas fa-code"></i> API Reference</a></li>
+                <li><a href="#examples"><i class="fas fa-laptop-code"></i> Examples</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="version">v1.0.0</div>
+            </div>
+        </nav>
+
+        <main class="content">
+            <section id="introduction">
+                <h2><i class="fas fa-home"></i> Introduction</h2>
+                <p>HueStack is a comprehensive UI library designed for Roblox experiences that provides modern, customizable components with smooth animations and a clean aesthetic.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-paint-brush"></i>
+                        <h3>Customizable</h3>
+                        <p>Full theming support with live preview editor</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h3>Performant</h3>
+                        <p>Optimized animations and rendering</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Responsive</h3>
+                        <p>Adapts to different screen sizes</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-code"></i>
+                        <h3>Clean API</h3>
+                        <p>Intuitive and well-documented</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="getting-started">
+                <h2><i class="fas fa-rocket"></i> Getting Started</h2>
+                <p>To use HueStack in your Roblox project, follow these steps:</p>
+                
+                <h3>Installation</h3>
+                <div class="code-block">
+                    <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                <pre><code class="language-lua">-- Place the module in ReplicatedStorage
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HueStack = require(ReplicatedStorage:WaitForChild("HueStack"))</code></pre>
+                </div>
+                <h3>Basic Usage</h3>
+
+                <div class="code-block">
+                    <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                <pre><code class="language-lua">-- Create a window
+local window = HueStack.CreateWindow({
+    Title = "My App",
+    Size = UDim2.new(0, 500, 0, 400),
+    IncludeThemeEditor = true
+})
+
+-- Add a tab
+local mainTab = window:AddTab("Main")
+
+-- Add a section to the tab
+local settingsSection = mainTab:AddSection({
+    Title = "Settings",
+    Size = UDim2.new(1, -24, 0, 200)
+})
+
+-- Add components to the section
+settingsSection:AddElement("Toggle", {
+    Text = "Enable Feature",
+    Default = true,
+    OnToggle = function(state)
+        print("Feature toggled:", state)
+    end
+})</code></pre>
+                </div>
+            </section>
+
+            <section id="components">
+                <h2><i class="fas fa-cubes"></i> Components</h2>
+                
+                <div class="component-card">
+                    <h3>Window</h3>
+                    <p>The main container for your UI with draggable, resizable, and minimizable capabilities.</p>
+
+                    <div class="code-block">
+                        <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                    <pre><code class="language-lua">HueStack.CreateWindow({
+    Title = "Window Title",
+    Size = UDim2.new(0, 600, 0, 450),
+    IncludeThemeEditor = true -- Optional
+})</code></pre>
+</div>
+                </div>
+                
+                <div class="component-card">
+                    <h3>Button</h3>
+                    <p>Interactive button with hover and click effects.</p>
+                    <div class="code-block">
+                        <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                    <pre><code class="language-lua">section:AddElement("Button", {
+    Text = "Click Me",
+    OnClick = function()
+        print("Button clicked!")
+    end
+})</code></pre>
+</div>
+                </div>
+                
+                <div class="component-card">
+                    <h3>Toggle</h3>
+                    <p>Switch component for boolean options.</p>
+
+                    <div class="code-block">
+                        <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                    <pre><code class="language-lua">section:AddElement("Toggle", {
+    Text = "Enable Feature",
+    Default = false,
+    OnToggle = function(state)
+        print("Toggle state:", state)
+    end
+})</code></pre>
+</div>
+                </div>
+                
+                <div class="component-card">
+                    <h3>Slider</h3>
+                    <p>Range input for numeric values.</p>
+                    <div class="code-block">
+                        <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                    <pre><code class="language-lua">section:AddElement("Slider", {
+    Text = "Volume",
+    Min = 0,
+    Max = 100,
+    Step = 1,
+    Default = 50,
+    OnChange = function(value)
+        print("Volume set to:", value)
+    end
+})</code></pre>
+</div>
+                </div>
+                
+                <div class="component-card">
+                    <h3>Dropdown</h3>
+                    <p>Select component for choosing from multiple options.</p>
+                    <div class="code-block">
+                        <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                    <pre><code class="language-lua">section:AddElement("Dropdown", {
+    Default = "Option 1",
+    Options = {"Option 1", "Option 2", "Option 3"},
+    OnSelect = function(option)
+        print("Selected:", option)
+    end
+})</code></pre>
+</div>
+
+                </div>
+                
+                <div class="component-card">
+                    <h3>Input</h3>
+                    <p>Text input field for user text entry.</p>
+                    <div class="code-block">
+                        <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                    <pre><code class="language-lua">section:AddElement("Input", {
+    Text = "",
+    Placeholder = "Enter text...",
+    OnFocusLost = function(text)
+        print("User entered:", text)
+    end
+})</code></pre>
+</div>
+                </div>
+            </section>
+
+            <section id="theming">
+                <h2><i class="fas fa-palette"></i> Theming</h2>
+                <p>HueStack provides comprehensive theming capabilities with a built-in theme editor.</p>
+                
+                <h3>Default Theme Structure</h3>
+                <div class="code-block">
+                    <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                <pre><code class="language-lua">local defaultTheme = {
+    -- Color scheme
+    BackgroundColor = Color3.fromRGB(25, 25, 25),
+    PrimaryColor = Color3.fromRGB(45, 45, 45),
+    SecondaryColor = Color3.fromRGB(35, 35, 35),
+    TextColor = Color3.fromRGB(240, 240, 240),
+    AccentColor = Color3.fromRGB(100, 180, 255),
+    
+    -- Visual effects
+    CornerRadius = UDim.new(0, 8),
+    StrokeThickness = 1,
+    
+    -- Typography
+    FontTitle = Enum.Font.GothamBold,
+    FontButton = Enum.Font.GothamMedium,
+    FontContent = Enum.Font.Gotham,
+    
+    -- Animation
+    TransitionSpeed = 0.15
+}</code></pre>
+</div>
+                
+                <h3>Customizing the Theme</h3>
+                <div class="code-block">
+                    <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                <pre><code class="language-lua">-- Change specific theme properties
+HueStack.SetTheme({
+    AccentColor = Color3.fromRGB(255, 120, 200),
+    CornerRadius = UDim.new(0, 12)
+})
+
+-- Reset to default theme
+HueStack.ResetTheme()
+
+-- Get current theme
+local currentTheme = HueStack.GetTheme()</code></pre>
+                </div>
+                <h3>Theme Editor</h3>
+                <p>When creating a window, you can include the theme editor:</p>
+                <div class="code-block">
+                    <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                <pre><code class="language-lua">local window = HueStack.CreateWindow({
+    Title = "My App",
+    IncludeThemeEditor = true
+})</code></pre>
+</div>
+            </section>
+
+            <section id="api-reference">
+                <h2><i class="fas fa-code"></i> API Reference</h2>
+                
+                <h3>Core Functions</h3>
+                <div class="api-method">
+                    <h4>CreateWindow(settings)</h4>
+                    <p>Creates a new draggable window container.</p>
+                    <p><strong>Parameters:</strong> Table with window settings (Title, Size, etc.)</p>
+                    <p><strong>Returns:</strong> Window object</p>
+                </div>
+                
+                <div class="api-method">
+                    <h4>SetTheme(newTheme)</h4>
+                    <p>Updates the current theme with new properties.</p>
+                    <p><strong>Parameters:</strong> Table with theme overrides</p>
+                </div>
+                
+                <h3>Window Methods</h3>
+                <div class="api-method">
+                    <h4>window:AddTab(name, icon)</h4>
+                    <p>Adds a new tab to the window.</p>
+                    <p><strong>Returns:</strong> Tab object</p>
+                </div>
+                
+                <h3>Tab Methods</h3>
+                <div class="api-method">
+                    <h4>tab:AddSection(settings)</h4>
+                    <p>Adds a section to the tab.</p>
+                    <p><strong>Returns:</strong> Section object</p>
+                </div>
+                
+                <h3>Section Methods</h3>
+                <div class="api-method">
+                    <h4>section:AddElement(type, settings)</h4>
+                    <p>Adds a UI element to the section.</p>
+                    <p><strong>Parameters:</strong> Element type ("Button", "Toggle", etc.) and settings</p>
+                    <p><strong>Returns:</strong> Element object</p>
+                </div>
+            </section>
+
+            <section id="examples">
+                <h2><i class="fas fa-laptop-code"></i> Examples</h2>
+                
+                <h3>Settings Panel</h3>
+                <div class="code-block">
+                    <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                <pre><code class="language-lua">local window = HueStack.CreateWindow({
+    Title = "Game Settings",
+    Size = UDim2.new(0, 500, 0, 400)
+})
+
+local settingsTab = window:AddTab("Settings")
+
+-- Graphics Section
+local graphicsSection = settingsTab:AddSection({
+    Title = "Graphics",
+    Size = UDim2.new(1, -24, 0, 180)
+})
+
+graphicsSection:AddElement("Dropdown", {
+    Text = "Quality Preset",
+    Options = {"Low", "Medium", "High", "Ultra"},
+    Default = "Medium",
+    OnSelect = function(option)
+        -- Set graphics quality
+    end
+})
+
+graphicsSection:AddElement("Slider", {
+    Text = "Render Distance",
+    Min = 100,
+    Max = 1000,
+    Step = 50,
+    Default = 500,
+    OnChange = function(value)
+        -- Update render distance
+    end
+})
+
+-- Audio Section
+local audioSection = settingsTab:AddSection({
+    Title = "Audio",
+    Size = UDim2.new(1, -24, 0, 120)
+})
+
+audioSection:AddElement("Slider", {
+    Text = "Master Volume",
+    Min = 0,
+    Max = 100,
+    Default = 80,
+    OnChange = function(value)
+        -- Update volume
+    end
+})</code></pre>
+                </div>
+                <h3>Inventory UI</h3>
+                <div class="code-block">
+                    <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
+                <pre><code class="language-lua">local window = HueStack.CreateWindow({
+    Title = "Inventory",
+    Size = UDim2.new(0, 600, 0, 450)
+})
+
+local inventoryTab = window:AddTab("Items")
+local statsTab = window:AddTab("Stats")
+
+-- Items grid
+local itemsSection = inventoryTab:AddSection({
+    Title = "Your Items",
+    Size = UDim2.new(1, -24, 1, -50)
+})
+
+-- Stats display
+local statsSection = statsTab:AddSection({
+    Title = "Character Stats",
+    Size = UDim2.new(1, -24, 0, 200)
+})
+
+statsSection:AddElement("Label", {
+    Text = "Strength: 15",
+    TextSize = 16
+})
+
+statsSection:AddElement("Label", {
+    Text = "Agility: 22",
+    TextSize = 16
+})</code></pre>
+</div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-lua.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
