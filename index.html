@@ -73,9 +73,10 @@
                 <h3>Installation</h3>
                 <div class="code-block">
                     <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
-                <pre><code class="language-lua">-- Place the module in ReplicatedStorage
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local HueStack = require(ReplicatedStorage:WaitForChild("HueStack"))</code></pre>
+                <pre><code class="language-lua">
+local HueStack = loadstring(game:HttpGet('https://raw.githubusercontent.com/Fayte0001/HueStack-UI-Library/refs/heads/main/Loadstring/HueStack-UI-Library.txt'))()
+local Players = game:GetService("Players")
+</code></pre>
                 </div>
                 <h3>Basic Usage</h3>
 
