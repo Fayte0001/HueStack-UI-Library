@@ -7,6 +7,7 @@
     <img src="https://img.shields.io/badge/Version-1.0.0-orange" alt="Version">
   </p>
 </p>
+![image](https://cdn.discordapp.com/attachments/1333455159971545169/1369674761243852903/image_5.png?ex=681cb886&is=681b6706&hm=f6b3bb4c87d6c006d59d26083fc1e2e85d0283a2ce9ca4409f5d3407abdb59f5&)
 
 ## ✨ Features
 
