@@ -178,12 +178,14 @@ settingsSection:AddElement("Toggle", {
                     <p>Select component for choosing from multiple options.</p>
                     <div class="code-block">
                         <button class="copy-button" title="Copy to clipboard"><i class="far fa-copy"></i></button>
-                    <pre><code class="language-lua">section:AddElement("Dropdown", {
+                    <pre><code class="language-lua">local myDropdown = section:AddElement("Dropdown", {
     Default = "Option 1",
     Options = {"Option 1", "Option 2", "Option 3"},
     OnSelect = function(option)
         print("Selected:", option)
     end
+    myDropdown:RefreshOptions({"New1", "New2", "New3"}, true)
+                        
 })</code></pre>
 </div>
 
