@@ -3,67 +3,7 @@ local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local DraggableObject = {
-    new = function(frame)
-       local DraggableObject = {}
-DraggableObject.__index = DraggableObject
-
-function DraggableObject.new(frame)
-    local self = setmetatable({}, DraggableObject)
-    self.Frame = frame
-    self.Dragging = false
-    self.DragInput = nil
-    self.DragStart = nil
-    self.StartPosition = nil
-    
-    self.Frame.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            self.Dragging = true
-            self.DragStart = input.Position
-            self.StartPosition = self.Frame.Position
-            
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    self.Dragging = false
-                end
-            end)
-        end
-    end)
-    
-    self.Frame.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement then
-            self.DragInput = input
-        end
-    end)
-    
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
-        if input == self.DragInput and self.Dragging then
-            local delta = input.Position - self.DragStart
-            self.Frame.Position = UDim2.new(
-                self.StartPosition.X.Scale,
-                self.StartPosition.X.Offset + delta.X,
-                self.StartPosition.Y.Scale,
-                self.StartPosition.Y.Offset + delta.Y
-            )
-        end
-    end)
-    
-    return self
-end
-
-function DraggableObject:Enable()
-    self.Frame.Active = true
-    self.Frame.Selectable = true
-end
-
-function DraggableObject:Disable()
-    self.Frame.Active = false
-    self.Frame.Selectable = false
-end
-
-return DraggableObject
-    end
-}
+local DraggableObject = loadstring(game:HttpGet(`https://raw.githubusercontent.com/Fayte0001/HueStack-UI-Library/refs/heads/main/Loadstring/draggableobject.txt))()
 --[[
     ===========================================
     THEME CONFIGURATION
