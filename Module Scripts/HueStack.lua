@@ -1858,4 +1858,4 @@ end
 --]]
 
 UICornerStrokeLib.theme = theme
-return UICornerStrokeLibtack
+return UICornerStrokeLib
