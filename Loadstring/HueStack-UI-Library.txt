@@ -402,7 +402,7 @@ function UICornerStrokeLib.CreateWindow(settings)
 		ZIndexBehavior = Enum.ZIndexBehavior.Global,
 		AutoLayout = false
 	})
-	gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	gui.Parent = game:GetService("CoreGui")
 
 	local mainFrame = UICornerStrokeLib.CreateElement("Frame", {
 		Size = settings.Size or theme.DefaultWindowSize,
@@ -1073,12 +1073,12 @@ function UICornerStrokeLib.CreateDropdown(parent, settings)
 
 	-- Use PlayerGui instead of CoreGui to avoid permission issues
 	local success, err = pcall(function()
-		optionsGui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+		optionsGui.Parent = game:GetService("CoreGui")
 	end)
 
 	if not success then
 		-- Fallback if PlayerGui isn't available (like in some Studio contexts)
-		optionsGui.Parent = parent:FindFirstAncestorOfClass("ScreenGui") or game:GetService("StarterGui")
+		optionsGui.Parent = game:GetService("CoreGui")
 	end
 
 	-- Options frame
