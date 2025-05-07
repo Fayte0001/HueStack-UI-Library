@@ -1,14 +1,17 @@
 <p align="center">
-  <h1 align="center">HueStack UI Library</h1>
-  <p align="center">A modern, customizable UI component library for Roblox experiences</p>
-  <p align="center">
-    <img src="https://img.shields.io/badge/Roblox-Compatible-brightgreen" alt="Roblox Compatible">
-    <img src="https://img.shields.io/badge/License-MIT-blue" alt="License">
-    <img src="https://img.shields.io/badge/Version-1.0.0-orange" alt="Version">
-  </p>
-</p>
-![My Logo](https://cdn.discordapp.com/attachments/1333455159971545169/1369674761243852903/image_5.png?ex=681cb886&is=681b6706&hm=f6b3bb4c87d6c006d59d26083fc1e2e85d0283a2ce9ca4409f5d3407abdb59f5&)
+  
 
+<h1 align="center">HueStack UI Library</h1>
+
+<p align="center">A modern, customizable UI component library for Roblox experiences</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Roblox-Compatible-brightgreen" alt="Roblox Compatible">
+  <img src="https://img.shields.io/badge/License-MIT-blue" alt="License">
+  <img src="https://img.shields.io/badge/Version-1.0.0-orange" alt="Version">
+</p>
+<img src="https://cdn.discordapp.com/attachments/1333455159971545169/1369674761243852903/image_5.png?ex=681cb886&is=681b6706&hm=f6b3bb4c87d6c006d59d26083fc1e2e85d0283a2ce9ca4409f5d3407abdb59f5" alt="HueStack Logo" width="150"/>
+</p>
 ## ✨ Features
 
 - **🎨 Fully Customizable** - Comprehensive theming system with a live preview editor
